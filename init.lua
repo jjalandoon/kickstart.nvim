@@ -968,6 +968,27 @@ require('lazy').setup({
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
   },
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('treesitter-context').setup {
+        enable = true,
+        max_lines = 5,
+        min_window_height = 0,
+        line_numbers = true,
+        multiline_threshold = 1,
+        trim_scope = 'outer',
+        mode = 'cursor',
+        separator = nil,
+      }
+
+      -- Optional: Add keybinding to jump to context
+      vim.keymap.set('n', '[c', function()
+        require('treesitter-context').go_to_context()
+      end, { silent = true, desc = 'Jump to context' })
+    end,
+  },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
